@@ -1,13 +1,10 @@
 {% extends "forum/base.html" %}
 {% block content %}
-    {% for thread in threads %}
+    {% for topic in topics %}
         <article class="media content-section">
-            <h2><a class="article-title" href="#">{{ thread.title }}</a></h2>
+            <h2><a class="article-title" href="/threads_by_topic/{{ topic.title }}">{{ topic.title }}</a></h2>
             <div class="media-body">
-              <div class="article-metadata">
-                <a class="mr-2" href="#">{{ thread.author }}</a>
-                <small class="text-muted">{{ thread.timestamp|date:'dS, F, Y'}}</small>
-              </div>
+              <p class="article-content">{{ topic.description }}</p>
             </div>
           </article>
     {% endfor %}

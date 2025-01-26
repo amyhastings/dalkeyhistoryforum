@@ -1,0 +1,16 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+    <p>Forums: {{ topic.title }}</p>
+    {% for thread in threads %}
+        <article class="media content-section">
+            <div class="media-body">
+                <h2><a class="article-title" href="/thread_post_list/{{ thread.title }}">{{ thread.title }}</a></h2>
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ thread.author }}</a>
+                    <small class="text-muted">{{ thread.timestamp|date:'dS, F, Y'}}</small>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock %}
