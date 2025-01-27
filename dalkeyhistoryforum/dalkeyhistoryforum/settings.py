@@ -131,3 +131,5 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_FAIL_SILENTLY = not DEBUG
 
 LOGIN_REDIRECT_URL = 'forum-home'
+
+LOGIN_URL = 'login'
