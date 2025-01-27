@@ -2,16 +2,17 @@
 
 {% block content %}
   <h1>{{ thread.title }}</h1>
-
   {% for post in posts %}
-    <div class="post">
-      {{ post.content }}
-    </div>
-    <div>
-      <small class="text-muted">{{ post.author }} {{ post.timestamp}}</small>
-    </div>
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+        <div class="media-body">
+            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ post.author }}</a>
+                <small class="text-muted">{{ post.timestamp }}</small>
+            </div>
+        </div>
+    </article>
   {% endfor %}
-
-  <hr>
-
 {% endblock %}
