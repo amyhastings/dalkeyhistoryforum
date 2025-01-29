@@ -1,7 +1,8 @@
 {% extends 'forum/base.html' %}
 
 {% block content %}
-  <h1>{{ thread.title }}</h1>
+  <p>Forums &gt; {{ topic.title }} &gt; {{ thread.title }}</p>
+  <h2>{{ thread.title }}</h2>
   {% for post in posts %}
     <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">

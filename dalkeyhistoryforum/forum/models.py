@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -20,6 +21,9 @@ class Thread(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('view-thread', args=[str(self.topic.id), str(self.id)]) 
 
 class Post(models.Model):
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
