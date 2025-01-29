@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
@@ -46,8 +47,6 @@ class PostListView(ListView):
         self.thread = get_object_or_404(Thread, id=self.kwargs['thread_id'])
         return Post.objects.filter(thread=self.thread).order_by('timestamp')
 
-
-
 @login_required
 def create_thread(request):
     if request.method == 'POST':
@@ -69,14 +68,24 @@ def create_thread(request):
         p_form = FirstPostCreateForm()
     return render(request, 'forum/thread_form.html', {'t_form': t_form, 'p_form': p_form})
 
-
-class CreatePostView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
+    template_name = 'forum/post_form.html'
     fields = ['content']
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PostCreateView, self).get_context_data(*args, **kwargs)
+        context['topic'] = get_object_or_404(Topic, id=self.kwargs['topic_id'])
+        context['thread'] = get_object_or_404(Thread, id=self.kwargs['thread_id'])
+        return context
     
     def form_valid(self, form):
-        form.instance.thread_id = self.kwargs['pk']
+        form.instance.author = self.request.user
+        form.instance.thread = get_object_or_404(Thread, id=self.kwargs['thread_id'])
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('view-thread', kwargs={'topic_id': self.kwargs['topic_id'], 'thread_id': self.kwargs['thread_id']})
 
 def about(request):
     return render(request, "forum/about.html", {"title": "About"})
