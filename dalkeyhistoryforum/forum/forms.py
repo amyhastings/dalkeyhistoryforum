@@ -9,4 +9,9 @@ class ThreadCreateForm(forms.ModelForm):
 class FirstPostCreateForm(forms.ModelForm):
     class Meta:
         model = Post 
-        fields = ['content']
+        fields = ['content', 'image']
+
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = Post 
+        fields = ['content', 'image']

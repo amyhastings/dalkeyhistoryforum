@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from PIL import Image
 
 User = get_user_model()
 
@@ -30,4 +31,15 @@ class Post(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    image = models.ImageField(upload_to='post_pics', blank=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.image and hasattr(self.image, 'path'):
+            with Image.open(self.image.path) as img:
+                if img.width > 600 or img.height > 600:
+                    output_size = (600, int((600 / img.width) * img.height))
+                    img = img.resize(output_size, Image.LANCZOS)
+                    img.save(self.image.path)
 

@@ -3,11 +3,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 
 from .models import Topic, Thread, Post
-from .forms import ThreadCreateForm, FirstPostCreateForm
+from .forms import ThreadCreateForm, FirstPostCreateForm, CommentCreateForm
 
 User = get_user_model()
 
@@ -37,7 +37,7 @@ class ThreadListView(ListView):
 def create_thread(request):
     if request.method == 'POST':
         t_form = ThreadCreateForm(request.POST)
-        p_form = FirstPostCreateForm(request.POST)
+        p_form = FirstPostCreateForm(request.POST, request.FILES)
 
         if t_form.is_valid() and p_form.is_valid():
             thread = t_form.save(commit=False)
@@ -70,6 +70,24 @@ class PostListView(ListView):
         self.thread = get_object_or_404(Thread, id=self.kwargs['thread_id'])
         return Post.objects.filter(thread=self.thread).order_by('timestamp')
 
+@login_required
+def create_comment(request, *args, **kwargs):
+    thread = get_object_or_404(Thread, id=kwargs['thread_id'])
+
+    if request.method == 'POST':
+        form = CommentCreateForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.thread = thread
+            post.author = request.user
+            post.save()
+            return redirect(reverse('view-thread', kwargs={'topic_id': post.thread.topic.id, 'thread_id': post.thread.id}))
+
+    else:
+        form = CommentCreateForm()
+    return render(request, 'forum/post_form.html', {'form': form, 'thread': thread})
+
 class UserPostListView(ListView):
     model = Post
     template_name = 'forum/user_posts.html'
@@ -80,29 +98,10 @@ class UserPostListView(ListView):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return user.posts.order_by('-timestamp')
     
-class PostCreateView(LoginRequiredMixin, CreateView):
-    model = Post
-    template_name = 'forum/post_form.html'
-    fields = ['content']
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(PostCreateView, self).get_context_data(*args, **kwargs)
-        context['topic'] = get_object_or_404(Topic, id=self.kwargs['topic_id'])
-        context['thread'] = get_object_or_404(Thread, id=self.kwargs['thread_id'])
-        return context
-    
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.thread = get_object_or_404(Thread, id=self.kwargs['thread_id'])
-        return super().form_valid(form)
-    
-    def get_success_url(self):
-        return reverse_lazy('view-thread', kwargs={'topic_id': self.kwargs['topic_id'], 'thread_id': self.kwargs['thread_id']})
-
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     template_name = 'forum/post_form.html'
-    fields = ['content']
+    fields = ['content', 'image']
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostUpdateView, self).get_context_data(*args, **kwargs)

@@ -7,7 +7,7 @@
             <div class="media-body">
                 <h2><a class="article-title" href="{% url 'view-thread' topic.id thread.id %}">{{ thread.title }}</a></h2>
                 <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ thread.author }}</a>
+                    <a class="mr-2" href="{% url 'user-posts' thread.author.username %}">{{ thread.author }}</a>
                     <small class="text-muted">{{ thread.timestamp|date:'dS, F, Y'}}</small>
                 </div>
             </div>

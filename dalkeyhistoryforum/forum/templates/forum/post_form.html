@@ -2,7 +2,7 @@
 {% block content %}
     {% load crispy_forms_tags %}
     <div class="content-section">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Comment on this Thread: "{{ thread.title }}"</legend>

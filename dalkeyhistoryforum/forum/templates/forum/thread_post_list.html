@@ -8,6 +8,9 @@
         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
         <div class="media-body">
             <p class="article-content">{{ post.content }}</p>
+            {% if post.image %}
+            <img class="img-responsive" src="{{ post.image.url }}">
+            {% endif %}
             <div class="article-metadata">
                 <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                 <small class="text-muted">{{ post.timestamp }}</small>

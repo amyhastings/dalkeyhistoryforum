@@ -1,7 +1,9 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from .models import Topic, Thread, Post
+from .forms import CommentCreateForm
 
 class ThreadModelTests(TestCase):
     @classmethod
@@ -80,6 +82,18 @@ class PostModelTests(TestCase):
         self.assertEqual(expected_author, 'testuser')
         self.assertEqual(expected_thread, 'Test Thread')
         self.assertEqual(expected_content, 'This is a test post')
+
+    def test_post_with_image(self):
+        image_data = b'\x00' * 1024  # 1KB dummy image data
+        image_file = SimpleUploadedFile('test_image.jpg', image_data, content_type='image/jpeg')
+        post_with_image = Post.objects.create(
+            author=self.user,
+            thread=self.thread,
+            content='This is a test post with image',
+            image=image_file
+        )
+        self.assertTrue(post_with_image.image)
+        self.assertEqual(post_with_image.content, 'This is a test post with image')
     
 class PostViewsTests(TestCase):
     def setUp(self):
@@ -113,6 +127,18 @@ class PostViewsTests(TestCase):
         self.assertEqual(response.status_code, 302) 
         self.assertTrue(Post.objects.filter(content='New post text').exists())
     
+    def test_create_post_view_with_invalid_image_format(self):
+        invalid_image_data = b'this is not real image data'
+        invalid_image_file = SimpleUploadedFile('new_image.txt', invalid_image_data, content_type='text/plain')
+        form = CommentCreateForm(files={'image': invalid_image_file}, instance=self.user.profile)
+        self.assertFalse(form.is_valid())
+
+    def test_create_post_with_oversized_image(self):
+        oversized_image_data = b'\x00' * 5242880 
+        oversized_image_file = SimpleUploadedFile('new_image.jpg', oversized_image_data, content_type='image/jpeg')
+        form = CommentCreateForm(files={'image': oversized_image_file}, instance=self.user.profile)
+        self.assertFalse(form.is_valid())
+
     def test_update_post_view(self):
         self.client.login(username='testuser', password='12345')
         url = reverse('post-update', kwargs={"pk": self.post.pk, "topic_id": self.topic.id, "thread_id": self.thread.id})

@@ -9,8 +9,11 @@
         <div class="media-body">
             <p>Posted under Thread: {{ post.thread.title }}</p>
             <p class="article-content">{{ post.content }}</p>
+            {% if post.image %}
+            <img class="img-responsive" src="{{ post.image.url }}">
+            {% endif %}
             <div class="article-metadata">
-                <a class="mr-2" href="#">{{ post.author }}</a>
+                <p>{{ post.author }}</p>
                 <small class="text-muted">{{ post.timestamp }}</small>
             </div>
           {% if user == post.author %}
