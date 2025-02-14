@@ -17,23 +17,32 @@
   </head>
   <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <nav class="navbar navbar-expand-md navbar-dark bg-blue fixed-top">
         <div class="container">
           <a class="navbar-brand mr-4" href="{% url 'forum-home' %}">Dalkey History Forum</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'forum-home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'thread-create' %}">Create Thread</a>
               <a class="nav-item nav-link" href="{% url 'forum-about' %}">About</a>
             </div>
             <!-- Navbar Right Side -->
               <div class="navbar-nav">
                   {% if user.is_authenticated %}
-                  <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                    <form action="{% url 'logout' %}" method="POST"  class="form-inline">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-link nav-item nav-link py-0">Logout</button>
-                    </form>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" dropdown>{{ user.username }}</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{% url 'profile' %}">My Profile</a></li>
+                      <li><a class="dropdown-item" href="{% url 'user-posts' user.username %}">My Posts</a></li>
+                      <li>
+                        <form action="{% url 'logout' %}" method="POST" class="d-inline">
+                          {% csrf_token %}
+                          <button type="submit" class="dropdown-item btn-link py-0">Logout</button>
+                        </form>
+                      </li>
+                    </ul>
+                  </li>
                   {% else %}
                   <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                   <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
