@@ -45,13 +45,16 @@ ul {
   color: #444444;
 }
 
-a.article-title:hover {
-  color: #428bca;
+.article a {
   text-decoration: none;
 }
 
 .article-content {
   white-space: pre-line;
+}
+
+.article-subheading {
+  font-weight: bold;
 }
 
 .article-img {

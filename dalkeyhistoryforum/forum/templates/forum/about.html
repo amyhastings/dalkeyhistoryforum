@@ -1,12 +1,77 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width= , initial-scale=1.0">
-    {% if title %}
-        <title>Dalkey History Forum - {{ title }}</title>
-    {% else %}
-        <title>Dalkey History Forum</title>
-    {% endif %}
-</head>
-<body>
-    <h1>Forum About!</h1>
-</body>
+{% extends "forum/base.html" %}
+{% block content %}
+<h2 class="article-title">About Us: Discover Dalkey's Past and Present</h2>
+<article class="media content-section">
+    <div class="media-body">
+        <p class="article-content">
+            Welcome to the Dalkey History Forum, where the vibrant tapestry of Dalkey's rich heritage
+             comes alive. Nestled on the southern coastline of Dublin, Ireland, Dalkey is a town steeped
+             in history, culture, and timeless charm. Our forum is dedicated to preserving, exploring,
+             and celebrating the stories, people, and events that have shaped Dalkey through the ages.
+        </p>
+        <h3 class="article-title">Who We Are</h3>
+        <p class="article-content">
+            The Dalkey History Forum is a community of passionate history
+             enthusiasts, local residents, scholars, and visitors united by a shared love for the
+             unique past of this remarkable town. Founded on the principle that history is not just
+             a record of the past but a guide for the future, we aim to create a space where everyone
+             can learn, share, and engage with Dalkey's fascinating legacy. Whether you're a lifelong
+             Dalkey resident, a history buff, or simply someone curious about the area, there's a place
+             for you here.
+        </p>
+        <p class="article-content">
+            We believe that understanding history strengthens our sense of community and identity. By exploring
+             the layers of Dalkey's heritage, from its origins as a medieval Viking settlement to its role as a
+             thriving port town and beyond, we hope to inspire new generations to cherish and protect the treasures
+             of our shared past.
+        </p>
+        <h3 class="article-title">Our Mission</h3>
+        <p class="article-content">
+            Our mission is simple: to uncover, preserve, and share the stories of Dalkey's past while fostering
+             a deeper appreciation for its cultural and historical significance. Through research, discussion, and
+             events, we strive to make history accessible, exciting, and relevant to people of all ages and backgrounds.
+        </p>
+        <h3 class="article-title">What we offer</h3>
+        <p class="article-content">
+            At the Dalkey History Forum, we provide a variety of resources and activities to engage our community and visitors:
+        </p>
+        <p class="article-content article-subheading">1. Discussion Forums</p>
+        <p class="article-content">
+            Our online discussion boards are a vibrant space for sharing stories, asking questions, and connecting with others
+             who share your interest in Dalkey's history. It's the perfect place to exchange knowledge, ideas, and memories.
+        </p>
+        <p class="article-content article-subheading">2. Lectures and Talks</p>
+        <p class="article-content">
+            Join us for regular talks and guest lectures from historians, archaeologists, and local experts.
+             These events offer unique insights into Dalkey's history and its connections to wider national and global narratives.
+        </p>
+        <p class="article-content article-subheading">3. Walking Tours and Field Trips</p>
+        <p class="article-content">
+            Experience history firsthand with guided walking tours of Dalkey's most iconic landmarks, such as Dalkey Castle,
+             Bullock Harbour, and the heritage-rich coastline. Our field trips also venture beyond Dalkey to explore the
+             surrounding areas of historical significance.
+        </p>
+        <p class="article-content article-subheading">4. Community Engagement</p>
+        <p class="article-content">
+            We collaborate with schools, libraries, and other local organizations to bring history to life for the younger generation.
+             Educational workshops, family-friendly activities, and exhibitions ensure that Dalkey's story continues to captivate and inspire.
+        </p>
+        <h3 class="article-title">Why Dalkey?</h3>
+        <p class="article-content">
+            Dalkey's history is a microcosm of Ireland's broader story. From its beginnings as a Viking trading hub to its growth
+             during medieval times as a bustling port, Dalkey's evolution mirrors Ireland's rich and complex journey through the centuries.
+             Its stunning architecture, dramatic seascapes, and literary connections make it a town like no other.
+             By exploring Dalkey's history, we gain a deeper understanding of how the past shapes our present and future.
+        </p>
+        <h3 class="article-title">Join Us</h3>
+        <p class="article-content">
+            We invite you to become a part of the Dalkey History Forum. Whether you're looking to learn more about the town's history,
+             contribute your own research, or simply enjoy our events and resources, we'd love to hear from you.
+        </p>
+        <p class="article-content">
+            Let's uncover Dalkey's story together.
+        </p>
+        <a class="btn btn-dark bg-blue" href="{% url 'register' %}">Register</a>
+    </div>
+</article>
+{% endblock content %}    

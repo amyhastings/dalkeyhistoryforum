@@ -1,13 +1,13 @@
 {% extends "forum/base.html" %}
 {% block content %}
-  <a href="{% url 'thread-create' %}">Create Thread</a>
     {% for topic in topics %}
         <article class="media content-section">
-            <h2><a class="article-title" href="{% url 'threads-by-topic' topic.id %}">{{ topic.title }}</a></h2>
             <div class="media-body">
-              <p class="article-content">{{ topic.description }}</p>
+              <a href="{% url 'threads-by-topic' topic.id %}">
+                  <h3 class="article-title">{{ topic.title }}</h3>
+                  <p class="article-content">{{ topic.description }}</p>
+              </a>
             </div>
-          </article>
+        </article>
     {% endfor %}
-
 {% endblock content %}    
