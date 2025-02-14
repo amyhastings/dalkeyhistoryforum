@@ -3,8 +3,8 @@
     {% for topic in topics %}
         <article class="media content-section">
             <div class="media-body">
-              <a href="{% url 'threads-by-topic' topic.id %}">
-                  <h3 class="article-title">{{ topic.title }}</h3>
+              <a class="text-decoration-none" href="{% url 'threads-by-topic' topic.id %}">
+                  <h4 class="article-title">{{ topic.title }}</h4>
                   <p class="article-content">{{ topic.description }}</p>
               </a>
             </div>
