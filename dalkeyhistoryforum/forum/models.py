@@ -40,7 +40,9 @@ class Post(models.Model):
         null=True, 
         blank=True,
     )
-
+   
     def get_image_url(self):
-        if self.image and hasattr(self.image, 'path'):
-            return cloudinary_url(self.image.name, width=600)[0]
+        if self.image:
+            return cloudinary_url(self.image.name, width=600, crop="scale")[0]
+        else:
+            return None

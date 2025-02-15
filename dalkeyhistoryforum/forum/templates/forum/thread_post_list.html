@@ -1,7 +1,7 @@
 {% extends 'forum/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <p>Forums &gt; {{ topic.title }} &gt; {{ thread.title }}</p>
+  <p class="links"><a href="{% url 'forum-home' %}">Forums</a> &gt; <a href="{% url 'threads-by-topic' topic.id %}">{{ topic.title }}</a> &gt; <a href="{% url 'view-thread' topic.id thread.id %}">{{ thread.title|truncatechars:20 }}</a></p>
   <h2>{{ thread.title }}</h2>
   {% for post in posts %}
     <article class="media content-section">
@@ -47,6 +47,8 @@
   </div>
   {% endif %}
 
-  <a href="{% url 'post-create' topic.id thread.id %}">Comment on this Thread</a>
+  <div class="d-flex justify-content-center">
+    <a class="btn btn-dark bg-blue" href="{% url 'post-create' topic.id thread.id %}">Comment on this Thread</a>
+  </div>
 
 {% endblock %}

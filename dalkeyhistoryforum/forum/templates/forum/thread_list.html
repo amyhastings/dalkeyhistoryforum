@@ -1,14 +1,21 @@
 {% extends "forum/base.html" %}
 
 {% block content %}
-    <p>Forums &gt; {{ topic.title }}</p>
+<p class="links"><a href="{% url 'forum-home' %}">Forums</a> &gt; <a href="{% url 'threads-by-topic' topic.id %}">{{ topic.title }}</a></p>
     {% for thread in threads %}
         <article class="media content-section">
-            <div class="media-body">
-                <h2><a class="article-title" href="{% url 'view-thread' topic.id thread.id %}">{{ thread.title }}</a></h2>
-                <div class="article-metadata">
-                    <a class="mr-2" href="{% url 'user-posts' thread.author.username %}">{{ thread.author }}</a>
-                    <small class="text-muted">{{ thread.timestamp|date:'dS, F, Y'}}</small>
+            <div class="d-md-flex">
+                <div class="p-1">
+                    <img class="rounded-circle author-img" src="{{ thread.author.profile.get_image_url }}" alt="Author image">
+                </div>
+                <div class="p-1 glyphicon glyphicon-th-list">
+                    <p>Something</p>
+                </div>
+                <div class="p-1 flex-grow-1">
+                    <p><a class="text-decoration-none" href="{% url 'view-thread' topic.id thread.id %}">{{ thread.title }}</a></p>
+                    <div class="article-metadata">
+                        <small class="text-muted">Created by <a class="mr-2" href="{% url 'user-posts' thread.author.username %}">{{ thread.author }}</a> on {{ thread.timestamp|date:'dS F, Y'}}</small>
+                    </div>
                 </div>
             </div>
         </article>
