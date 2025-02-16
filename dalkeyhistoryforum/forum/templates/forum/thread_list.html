@@ -2,25 +2,35 @@
 
 {% block content %}
 <p class="links"><a href="{% url 'forum-home' %}">Forums</a> &gt; <a href="{% url 'threads-by-topic' topic.id %}">{{ topic.title }}</a></p>
-    {% for thread in threads %}
+    {% if threads %}
+        {% for thread in threads %}
         <article class="media content-section">
-            <div class="d-md-flex">
-                <div class="p-1">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
                     <img class="rounded-circle author-img" src="{{ thread.author.profile.get_image_url }}" alt="Author image">
                 </div>
-                <div class="p-1 glyphicon glyphicon-th-list">
-                    <p>Something</p>
-                </div>
-                <div class="p-1 flex-grow-1">
-                    <p><a class="text-decoration-none" href="{% url 'view-thread' topic.id thread.id %}">{{ thread.title }}</a></p>
+                <div class="flex-grow-1 mx-3">
+                    <p class="thread-title mb-0"><a class="text-decoration-none" href="{% url 'view-thread' topic.id thread.id %}">{{ thread.title }}</a></p>
                     <div class="article-metadata">
-                        <small class="text-muted">Created by <a class="mr-2" href="{% url 'user-posts' thread.author.username %}">{{ thread.author }}</a> on {{ thread.timestamp|date:'dS F, Y'}}</small>
+                        <small class="text-muted">Created by <a class="mr-2" href="{% url 'user-posts' thread.author.username %}">{{ thread.author }}</a> on {{ thread.timestamp }}</small>
                     </div>
+                </div>
+                <div class="post-count d-flex align-items-center">
+                    <img class="img-responsive img-fluid me-2" src="/static/forum/images/posts.png" alt="Posts">
+                    <p class="mt-3">{{ thread.post_count }}</p>
                 </div>
             </div>
         </article>
-    {% endfor %}
-
+        {% endfor %}
+    {% else %}
+        <article class="media content-section">
+            <div  class="d-flex flex-column align-items-center justify-content-center">
+                <p>There are no threads under this topic yet!</p>
+                <p>Why not create a thread to start the discussion?</p>
+                <a class="btn btn-dark bg-blue" href="{% url 'thread-create' %}">Create a Thread</a>
+            </div>
+        </article>
+    {% endif %}
     {% if is_paginated %}
     <div class='post-pagination'>
         {% if page_obj.has_previous %}

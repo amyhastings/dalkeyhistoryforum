@@ -3,28 +3,45 @@
 {% block content %}
   <p class="links"><a href="{% url 'forum-home' %}">Forums</a> &gt; <a href="{% url 'threads-by-topic' topic.id %}">{{ topic.title }}</a> &gt; <a href="{% url 'view-thread' topic.id thread.id %}">{{ thread.title|truncatechars:20 }}</a></p>
   <h2>{{ thread.title }}</h2>
-  {% for post in posts %}
+  {% if posts %}
+    {% for post in posts %}
     <article class="media content-section">
-        <img class="rounded-circle article-img" src="{{ post.author.profile.get_image_url }}">
-        <div class="media-body">
+      <div class="d-flex">
+        <div class="d-flex flex-column align-items-center me-3">
+          <img class="rounded-circle post-author-img mb-2" src="{{ post.author.profile.get_image_url }}">
+          <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+        </div>
+        <div class="media-body flex-grow-1">
+          <div>
             <p class="article-content">{{ post.content }}</p>
             {% if post.image %}
-            <img class="img-responsive" src="{{ post.get_image_url }}">
-            {% endif %}
-            <div class="article-metadata">
-                <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-                <small class="text-muted">{{ post.timestamp }}</small>
+            <div class="img-container">
+              <img class="img-responsive img-fluid mb-3" src="{{ post.get_image_url }}">
             </div>
-          {% if user == post.author %}
-            <div>
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' topic.id thread.id post.id %}">Edit</a>
+            {% endif %}
+          </div>
+          <div class="d-flex flex-column align-items-end ms-auto">
+            {% if user == post.author %}
+            <div class="d-flex flex-row align-items-end">
+              <a class="btn btn-secondary btn-sm mt-1 mb-1 me-2" href="{% url 'post-update' topic.id thread.id post.id %}">Edit</a>
               <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' topic.id thread.id post.id %}">Delete</a>
             </div>
-          {% endif %}
+            {% endif %}
+            <div class="article-metadata">
+              <small class="text-muted">{{ post.timestamp }}</small>
+            </div>
         </div>
+      </div>
+  </article>
+    {% endfor %}
+  {% else %}
+    <article class="media content-section">
+      <div  class="d-flex flex-column align-items-center justify-content-center">
+          <p>There are no posts under this thread yet!</p>
+          <p>Why not post to start the discussion?</p>
+      </div>
     </article>
-  {% endfor %}
-
+  {% endif %}
   {% if is_paginated %}
   <div class='post-pagination'>
       {% if page_obj.has_previous %}

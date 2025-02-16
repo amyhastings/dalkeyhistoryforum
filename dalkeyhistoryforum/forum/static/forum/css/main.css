@@ -85,7 +85,18 @@ ul {
   /* margin-right: 15px; */
 }
 
+.post-author-img {
+  height: 60px;
+  width: 60px;
+}
+
+.post-count {
+  min-width: 65px;
+  /* margin-right: 15px; */
+}
+
 .article-metadata {
+  font-size: small;
   padding-bottom: 1px;
   margin-bottom: 4px;
   border-bottom: 1px solid #e3e3e3
@@ -106,4 +117,12 @@ ul {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+.logout {
+  color: #444444;
+}
+
+.img-container {
+  width: 100%;
 }

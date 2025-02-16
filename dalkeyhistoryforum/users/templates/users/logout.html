@@ -1,9 +1,7 @@
 {% extends "forum/base.html" %}
 {% block content %}
-    <h2>You have been logged out</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-             Login again <a href="{% url 'login' %}">Sign In</a>
-        </small>
+    <div class="d-flex flex-column align-items-center justify-content-center mt-5">
+        <h3 class="logout mb-3">You have been logged out</h3>
+        <p>Do you want to <a class="btn btn-dark bg-blue" href="{% url 'login' %}">Log In Again</a></p>
     </div>
 {% endblock content %}

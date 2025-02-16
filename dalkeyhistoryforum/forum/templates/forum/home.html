@@ -1,13 +1,43 @@
 {% extends "forum/base.html" %}
 {% block content %}
+  <div class="d-flex justify-content-center">
+    <h2 class="article-title mb-3">Discover Dalkey's Past and Present</h2>
+  </div>
+  <article class="mb-4">
+    <div>
+        <p>
+          Welcome to the Dalkey History Forum, where the vibrant tapestry of Dalkey's
+          rich heritage comes alive. Nestled on the southern coastline of Dublin, Ireland,
+          Dalkey is a town steeped in history, culture, and timeless charm.
+        </p>
+        <p>
+          Our forum is dedicated to preserving, exploring, and celebrating the stories, people,
+          and events that have shaped Dalkey through the ages.
+        </p>
+        <p>
+          We invite you to become a part of the Dalkey History Forum. Whether you're looking to learn more about the town's history,
+          contribute your own research, or simply enjoy our events and resources, we'd love to hear from you.
+      </p>
+      <p>
+          Let's uncover Dalkey's story together. Browse the discussion topics below to discover discussion threads that interest you!
+      </p>
+    </div>
+  </article>
+
     {% for topic in topics %}
         <article class="media content-section">
             <div class="media-body">
               <a class="text-decoration-none" href="{% url 'threads-by-topic' topic.id %}">
-                  <h4 class="article-title">{{ topic.title }}</h4>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="article-title mb-2">{{ topic.title }}</h4>
+                    <div class="d-flex align-items-center ms-3">
+                      <img class="img-responsive img-fluid me-2" src="static/forum/images/threads.png" alt="Threads">
+                      <p class="article-content mb-0">{{ topic.thread_count }}</p>
+                    </div>
+                  </div>
                   <p class="article-content">{{ topic.description }}</p>
               </a>
             </div>
         </article>
     {% endfor %}
-{% endblock content %}    
+{% endblock content %}
