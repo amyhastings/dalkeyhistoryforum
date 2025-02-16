@@ -2,14 +2,14 @@
 {% block content %}
     {% load crispy_forms_tags %}
     <div class="content-section">
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" id="postForm">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Comment on this Thread: "{{ thread.title }}"</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline" type="submit">
+                <button class="btn btn-dark bg-blue" type="submit">
                     {% if form.instance.pk %}
                     Update Post
                     {% else %}
@@ -19,4 +19,6 @@
             </div>
         </form>
     </div>
+    <script src="/static/forum/js/validation.js"></script>
 {% endblock content %}
+
