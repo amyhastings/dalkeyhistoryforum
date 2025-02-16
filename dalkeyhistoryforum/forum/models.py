@@ -43,6 +43,6 @@ class Post(models.Model):
    
     def get_image_url(self):
         if self.image:
-            return cloudinary_url(self.image.name, width=600, crop="scale")[0]
+            return cloudinary_url(self.image.name, width="700", crop="scale")[0]
         else:
             return None
