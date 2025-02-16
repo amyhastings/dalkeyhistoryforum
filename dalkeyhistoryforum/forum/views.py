@@ -16,6 +16,13 @@ class TopicListView(ListView):
     template_name = 'forum/home.html'
     fields = ['title', 'description']
     context_object_name = 'topics'
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super(TopicListView, self).get_context_data(*args, **kwargs)
+        topics = context['topics']
+        for topic in topics:
+            topic.thread_count = Thread.objects.filter(topic=topic).count()
+        return context
 
 class ThreadListView(ListView):
     model = Thread
@@ -27,6 +34,9 @@ class ThreadListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(ThreadListView, self).get_context_data(*args, **kwargs)
         context['topic'] = get_object_or_404(Topic, id=self.kwargs['topic_id'])
+        threads = context['threads']
+        for thread in threads:
+            thread.post_count = Post.objects.filter(thread=thread).count()
         return context
 
     def get_queryset(self):
