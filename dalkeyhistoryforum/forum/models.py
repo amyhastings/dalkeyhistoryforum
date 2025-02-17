@@ -43,7 +43,7 @@ class Post(models.Model):
    
     def get_image_url(self):
         if self.image:
-            if settings.STORAGES == 'cloudinary_storage.storage.MediaCloudinaryStorage':
+            if settings.ENVIRONMENT == 'production':
                 return cloudinary_url(self.image.name, width="700", crop="scale")[0]
             else:
                 return self.image.url
