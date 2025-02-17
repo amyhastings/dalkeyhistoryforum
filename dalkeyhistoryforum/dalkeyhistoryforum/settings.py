@@ -156,6 +156,6 @@ CLOUDINARY_STORAGE = {
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 if ENVIRONMENT == 'production':
-    STORAGES = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
