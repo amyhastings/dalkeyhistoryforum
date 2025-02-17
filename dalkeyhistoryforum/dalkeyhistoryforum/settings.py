@@ -15,7 +15,7 @@ import os
 
 import dj_database_url
 
-# Determine the environment
+# Determine the environment. Valid values are 'local' and 'production'.
 ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'local')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,8 +31,8 @@ SECRET_KEY = 'django-insecure-+l1png0gqdwbcf!6rgk(fe1n4rfyw$*ur784_copp$1sm47j+n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Pick up hostname from environment variable when running in render.
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.environ.get('RENDER_HOSTNAME', '')]
-
 
 # Application definition
 
@@ -152,9 +152,9 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ['CLOUDINARY_API_SECRET'],
 }
 
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Use Cloudinary in production and static files in local
 if ENVIRONMENT == 'production':
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 else:

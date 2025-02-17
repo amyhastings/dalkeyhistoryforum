@@ -7,6 +7,7 @@ from django.templatetags.static import static
 
 from django.conf import settings
 
+# User profile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(

@@ -1,3 +1,7 @@
+/*
+ * Listen for click events on the submit button on the form for posting/editing
+ * a comment. Make a call to the profanity API and block submission if found.
+ */
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('#postForm'); 
     const messageInput = document.querySelector('#id_content'); 
