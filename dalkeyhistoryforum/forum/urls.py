@@ -22,6 +22,7 @@ urlpatterns = [
     path('topic/<int:topic_id>/thread/<int:thread_id>/post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('about/',views.about, name='forum-about'),
+    path('error/',views.error, name='forum-error'),
 ]
 
 if settings.DEBUG:

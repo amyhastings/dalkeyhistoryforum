@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm 
+from django.urls import reverse
 
 def register(request):
     if request.method == 'POST':
@@ -23,6 +24,11 @@ def profile(request):
                                    request.FILES,
                                    instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
+            image = p_form.cleaned_data.get('image')
+            if image:
+                max_size = 10 * 1024 * 1024  # 10MB
+                if image.size > max_size:
+                    return redirect(reverse('profile-error'))
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated') #Changes here
@@ -37,3 +43,6 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+def error(request):
+    return render(request, "users/error.html", {"title": "Error"})

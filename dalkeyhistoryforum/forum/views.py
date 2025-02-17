@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
+from django import forms
 
 from .models import Topic, Thread, Post
 from .forms import ThreadCreateForm, FirstPostCreateForm, CommentCreateForm
@@ -88,6 +89,11 @@ def create_comment(request, *args, **kwargs):
         form = CommentCreateForm(request.POST, request.FILES)
 
         if form.is_valid():
+            image = form.cleaned_data.get('image')
+            if image:
+                max_size = 10 * 1024 * 1024  # 10MB
+                if image.size > max_size:
+                    return redirect(reverse('forum-error'))
             post = form.save(commit=False)
             post.thread = thread
             post.author = request.user
@@ -150,3 +156,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, "forum/about.html", {"title": "About"})
+
+def error(request):
+    return render(request, "forum/error.html", {"title": "Error"})

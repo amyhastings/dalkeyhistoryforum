@@ -27,6 +27,7 @@ urlpatterns = [
              template_name='users/password_reset_confirm.html'
          ),
          name='password_reset_confirm'),
+    path('error/', user_views.error, name='profile-error'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

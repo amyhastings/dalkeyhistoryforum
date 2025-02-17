@@ -134,7 +134,7 @@ class PostViewsTests(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_create_post_with_oversized_image(self):
-        oversized_image_data = b'\x00' * 5242880 
+        oversized_image_data = b'\x00' * 10485760 
         oversized_image_file = SimpleUploadedFile('new_image.jpg', oversized_image_data, content_type='image/jpeg')
         form = CommentCreateForm(files={'image': oversized_image_file}, instance=self.user.profile)
         self.assertFalse(form.is_valid())
