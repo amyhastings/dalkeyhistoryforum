@@ -37,8 +37,9 @@ The text below outlines the principal requirements of the project for the websit
 A version of the website is deployed here: https://dalkeyhistoryforum.onrender.com/. To view this website off-line and/or make changes:
 - clone the gitHub repository at https://github.com/amyhastings/dalkeyhistoryforum;
 - pip install -r requirements.txt;
-- go to https://cloudinary.com; generate a cloud name, API key and API secret key; and edit the .env file
-- run all of the code blocks in the init_data.ipynb file;
+- go to https://cloudinary.com; generate a cloud name, API key and API secret key; edit the .env file;
+- source the .env file;
+- run the following commands: python manage.py migrate ; python manage.py collectstatic ; python manage.py ensure_adminuser;
 - in the terminal, launch the application python ./app.py;
 - to test the reset password functionality, generate a Google email application password and edit the corresponding fields in the .env file.
 
