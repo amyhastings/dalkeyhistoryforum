@@ -4,3 +4,4 @@ db.sqlite3
 media/profile_pics/*
 media/post_pics/*
 htmlcov
+staticfiles
