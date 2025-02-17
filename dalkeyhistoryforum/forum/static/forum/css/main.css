@@ -1,15 +1,12 @@
+/* General styling for all pages */
+
 body {
     background: #EDE8F5;
     color: #333333;
     margin-top: 5rem;
 }
-  
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+
+h1, h2, h3, h4, h5, h6 {
   color: #7091E6;
 }
 
@@ -41,6 +38,16 @@ ul {
   margin-bottom: 20px;
 }
 
+/* Styling for Thread List, Thread Post List and User Posts Pages */
+.thread-title p {
+  color: #333333 !important;
+}
+
+.post-count {
+  color: #333333;
+}
+
+
 .links a {
   color: #3D52A0;
   font-weight: bold;
@@ -71,28 +78,12 @@ ul {
 }
 
 .article-content {
-  color: #444444;
+  color: #444444 !important;
   white-space: pre-line;
 }
 
 .article-subheading {
   font-weight: bold;
-}
-
-.author-img {
-  height: 40px;
-  width: 40px;
-  /* margin-right: 15px; */
-}
-
-.post-author-img {
-  height: 60px;
-  width: 60px;
-}
-
-.post-count {
-  min-width: 65px;
-  /* margin-right: 15px; */
 }
 
 .article-metadata {
@@ -102,12 +93,39 @@ ul {
   border-bottom: 1px solid #e3e3e3
 }
 
-.article-svg {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
+.author-img {
+  height: 40px;
+  width: 40px;
 }
 
+.post-author-img {
+  height: 90px;
+  width: 90px;
+}
+
+.author-name {
+  color: #444444;
+  font-size: small;
+  font-weight: bold;
+}
+
+.author-info {
+  width: 110px;
+}
+
+.post-count {
+  min-width: 65px;
+}
+
+.img-container {
+  width: 100%;
+}
+
+.error {
+  color: #444444;
+}
+
+/* Styling for User pages */
 .account-img {
   height: 125px;
   width: 125px;
@@ -123,6 +141,4 @@ ul {
   color: #444444;
 }
 
-.img-container {
-  width: 100%;
-}
+
