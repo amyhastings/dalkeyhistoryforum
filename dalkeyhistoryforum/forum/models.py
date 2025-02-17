@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.conf import settings
 
 from cloudinary_storage.storage import MediaCloudinaryStorage
 from cloudinary.utils import cloudinary_url
@@ -36,13 +37,15 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     image = models.ImageField(
         upload_to='post_pics',
-        storage=MediaCloudinaryStorage(),
         null=True, 
         blank=True,
     )
    
     def get_image_url(self):
         if self.image:
-            return cloudinary_url(self.image.name, width="700", crop="scale")[0]
+            if settings.STORAGES == 'cloudinary_storage.storage.MediaCloudinaryStorage':
+                return cloudinary_url(self.image.name, width="700", crop="scale")[0]
+            else:
+                return self.image.url
         else:
             return None

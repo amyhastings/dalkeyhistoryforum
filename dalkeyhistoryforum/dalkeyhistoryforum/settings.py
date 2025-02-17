@@ -15,6 +15,9 @@ import os
 
 import dj_database_url
 
+# Determine the environment
+ENVIRONMENT = os.getenv('DJANGO_ENVIRONMENT', 'local')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -149,5 +152,10 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ['CLOUDINARY_API_SECRET'],
 }
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+if ENVIRONMENT == 'production':
+    STORAGES = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
